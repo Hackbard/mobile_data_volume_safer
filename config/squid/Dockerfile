@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends squid3 squidgua
 COPY config/squid/squid.conf /etc/squid3/squid.conf
 COPY config/squid/squid.passwd /etc/squid3/passwd
 COPY config/squid/entrypoint.sh /sbin/entrypoint.sh
-COPY config/squid/squidGuard.conf /etc/squidguard/squidGuard.conf
+COPY config/squidGuard/squidGuard.conf /etc/squidguard/squidGuard.conf
 
 RUN chmod 755 /sbin/entrypoint.sh
 

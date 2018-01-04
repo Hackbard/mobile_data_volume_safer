@@ -2,7 +2,7 @@
 set -e
 
 update_database() {
-    SQUID_DB="usr/local/squidGuard/db"
+    SQUID_DB="/usr/local/squidGuard/db"
     mkdir -p $SQUID_DB
 
     cd /tmp
