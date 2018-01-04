@@ -1,6 +1,26 @@
 #!/bin/bash
 set -e
 
+update_database() {
+    SQUID_DB="usr/local/squidGuard/db"
+    mkdir -p $SQUID_DB
+
+    cd /tmp
+    echo "Load new Blacklists"
+    wget -q -c http://www.shallalist.de/Downloads/shallalist.tar.gz
+    tar -zxf shallalist.tar.gz
+    cp -ar /tmp/BL/* $SQUID_DB
+
+    for DIR in $SQUID_DB/*/
+    do
+        echo "Learn from" ${DIR}
+        squidGuard -vbC ${DIR}domains
+        squidGuard -vbC ${DIR}urls
+    done
+    rm -R /tmp/BL
+    chown proxy:proxy -R $SQUID_DB/
+}
+
 create_log_dir() {
   mkdir -p ${SQUID_LOG_DIR}
   chmod -R 755 ${SQUID_LOG_DIR}
@@ -21,6 +41,7 @@ apply_backward_compatibility_fixes() {
 
 create_log_dir
 create_cache_dir
+update_database
 apply_backward_compatibility_fixes
 
 # allow arguments to be passed to squid3
