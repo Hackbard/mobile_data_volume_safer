@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+    squid:
+        build:
+            context: .
+            dockerfile: config/squid/Dockerfile
+        container_name: mdvs_squid
+        networks: 
+            - mdvs
+        ports:
+            - "${SQUID_PORT}:3128"
+        volumes:
+            - /srv/docker/squid/cache:/var/spool/squid3
+        restart: always
+
+networks: {
+    mdvs: {
+    }
+}
+        
